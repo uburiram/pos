@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>POS QR - ร้านอาหาร</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/icon/favicon-32.png">
+  <link rel="apple-touch-icon" href="/icon/apple-touch-icon-180.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1a1a2e">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container center">
+    <img src="/icon/icon-192.png" alt="Logo" class="logo" width="96" height="96">
+    <h1>🍜 POS QR Code</h1>
+    <p class="subtitle">สแกนสั่งอาหาร + คิว + PromptPay</p>
+
+    <div class="card">
+      <h2>QR Code สำหรับลูกค้า</h2>
+      <p>ให้ลูกค้าสแกนเพื่อสั่งอาหาร</p>
+      <div id="qr-container">
+        <img id="menu-qr" alt="QR Menu" style="max-width:280px;display:none;">
+        <p id="qr-loading">กำลังสร้าง QR...</p>
+      </div>
+      <p id="menu-url" class="mono"></p>
+    </div>
+
+    <div class="links">
+      <a href="/menu.html" class="btn btn-primary">เปิดเมนูลูกค้า</a>
+      <a href="/merchant.html" class="btn btn-success">เปิดหน้าพ่อค้า (Android)</a>
+    </div>
+
+    <div class="card info">
+      <h3>วิธีใช้งาน</h3>
+      <ol>
+        <li>เปิดหน้าพ่อค้าบนมือถือ Android แล้ว<strong>ค้างไว้</strong></li>
+        <li>พิมพ์ QR นี้ติดหน้าร้าน หรือให้ลูกค้าสแกนจากหน้าจอ</li>
+        <li>ลูกค้าเลือกเมนู → ได้หมายเลขคิว + QR PromptPay</li>
+        <li>ออเดอร์จะเด้งขึ้นหน้าพ่อค้าทันที</li>
+      </ol>
+      <p><strong>หมายเหตุ:</strong> ต้องอยู่เครือข่าย WiFi เดียวกัน (หรือใช้ ngrok ถ้าต้องการจากภายนอก)</p>
+    </div>
+  </div>
+  <script>
+    fetch('/api/menu-qr')
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById('menu-qr').src = data.qr;
+        document.getElementById('menu-qr').style.display = 'block';
+        document.getElementById('qr-loading').style.display = 'none';
+        document.getElementById('menu-url').textContent = data.url;
+      })
+      .catch(err => {
+        document.getElementById('qr-loading').textContent = 'สร้าง QR ไม่สำเร็จ: ' + err.message;
+      });
+  </script>
+</body>
+</html>

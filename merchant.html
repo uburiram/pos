@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1a1a2e">
+  <title>หน้าพ่อค้า - ออเดอร์</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/icon/favicon-32.png">
+  <link rel="apple-touch-icon" href="/icon/apple-touch-icon-180.png">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="merchant-body">
+  <div class="container">
+    <header class="header merchant-header">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <img src="/icon/icon-192.png" alt="Logo" width="40" height="40" style="border-radius:8px;">
+        <h1>📋 ออเดอร์สด</h1>
+      </div>
+      <div class="status-bar">
+        <span id="conn-status" class="badge offline">Offline</span>
+        <span id="order-count" class="badge">0 ออเดอร์</span>
+      </div>
+    </header>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="active">กำลังดำเนินการ</button>
+      <button class="filter-btn" data-filter="all">ทั้งหมด</button>
+      <button class="filter-btn" data-filter="completed">เสร็จแล้ว</button>
+    </div>
+
+    <div id="orders-list" class="orders-list">
+      <p class="empty-state">รอออเดอร์จากลูกค้า...</p>
+    </div>
+  </div>
+
+  <audio id="notify-sound" preload="auto"></audio>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/merchant.js"></script>
+</body>
+</html>
